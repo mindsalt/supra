@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Projects :: {{project.name}}{% endblock %}
+
+{% block content %}
+
+	{% if project %}
+	    <ul>
+	        <li>{{ project.name }}</li>
+			<li>{{ project.client }}</li>
+	    </ul>
+	{% else %}
+	    <p>This project doesn't exist.</p>
+	{% endif %}
+
+{% endblock %}
+
+
+

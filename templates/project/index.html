@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+{% block head_inc %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//if no errors in form work slickbox magic
+	if ($('ul.errorlist').length == 0) {
+	 	$('#add_new_box').hide();
+		$('a#add_new_btn').click(function() {
+			$('#add_new_box').toggle(400);
+			return false;
+		});
+	}
+});
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Projects Page</h1>
+
+<div class="object_add">
+<h2><a id="add_new_btn" href="#">Add a new project</a></h2>
+<div id="add_new_box">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<form action="/project/" method="POST">
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+	</form>
+</div><!-- end #add_new_box -->
+</div><!-- end .object_add -->
+
+<div class="objects_box">
+
+<h2>All Projects</h2>
+{% if all_projects %}
+<table class="objects_table" width="100%">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Client</th>
+			<th>Category</th>
+			<th>Est. Time</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for project in all_projects %}
+        <tr>
+        	<td><a href="/project/{{project.id}}/">{{ project.name }}</a></td>
+        	<td>{{ project.client }}</td>
+        	<td>{{ project.category }}</td>
+        	<td>{{ project.est_time }}</td>
+        	<td>{{ project.status }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+
+    <p>No projects are available.</p>
+{% endif %}
+
+</div><!-- end .objects_box -->
+{% endblock %}
+
+
+

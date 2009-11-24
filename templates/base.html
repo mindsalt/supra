@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}My amazing site{% endblock %}</title>
+    
+    <link rel="stylesheet" type="text/css" href="/site_media/style.css" />    
+    {% block head_inc %}{% endblock %}
+    
+</head>
+
+<body>
+<div id="wrapper">
+
+    <div id="header">
+        {% block header %}
+        <ul id="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/project/">Projects</a></li>
+            <li><a href="/company/">Companies</a></li>
+            <li><a href="/person/">People</a></li>
+            <li><a href="/time/">Time</a></li>
+            <li><a href="/expense/">Expenses</a></li>
+            <li><a href="/invoice/">Invoices</a></li>
+
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>    
+</body>
+</html>

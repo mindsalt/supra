@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Time{% endblock %}
+
+{% block head_inc %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//if no errors in form work slickbox magic
+	if ($('ul.errorlist').length == 0) {
+	 	$('#add_new_box').hide();
+		$('a#add_new_btn').click(function() {
+			$('#add_new_box').toggle(400);
+			return false;
+		});
+	}
+});
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Timecard Page</h1>
+
+<div class="object_add">
+<h2><a id="add_new_btn" href="#">Add a new time record</a></h2>
+<div id="add_new_box">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<form action="/time/" method="POST">
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+	</form>
+</div><!-- end #add_new_box -->
+</div><!-- end .object_add -->
+
+<div class="objects_box">
+
+<h2>All Time</h2>
+{% if all_objects %}
+<table class="objects_table" width="100%">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Person</th>
+			<th>Client</th>
+			<th>Project</th>
+			<th>Date</th>
+			<th>Time Spent</th>
+			<th>Activity</th>
+			<th>Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for object in all_objects %}
+        <tr>
+        	<td><a href="/time/{{object.id}}/">Edit</a></td>
+        	<td>{{ object.person }}</td>
+        	<td>{{ object.client }}</td>
+        	<td>{{ object.project }}</td>
+        	<td>{{ object.date }}</td>
+        	<td>{{ object.time_spent }}</td>
+        	<td>{{ object.activity }}</td>
+        	<td>{{ object.notes }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+
+    <p>No time entries are available.</p>
+{% endif %}
+
+</div><!-- end .objects_box -->
+{% endblock %}
+
+
+

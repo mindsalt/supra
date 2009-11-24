@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Company :: {{company.name}}{% endblock %}
+
+{% block content %}
+
+	{% if company %}
+	    <ul>
+	        <li>{{ company.name }}</li>
+	    </ul>
+	{% else %}
+	    <p>This company doesn't exist.</p>
+	{% endif %}
+
+{% endblock %}
+
+
+

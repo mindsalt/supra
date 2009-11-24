@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+{% block head_inc %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//if no errors in form work slickbox magic
+	if ($('ul.errorlist').length == 0) {
+	 	$('#add_new_box').hide();
+		$('a#add_new_btn').click(function() {
+			$('#add_new_box').toggle(400);
+			return false;
+		});
+	}
+});
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Companies Page</h1>
+
+<div class="object_add">
+<h2><a id="add_new_btn" href="#">Add a new company</a></h2>
+<div id="add_new_box">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<form action="/company/" method="POST">
+	{{ form.as_p }}
+	<input type="submit" value="Submit" />
+	</form>
+</div><!-- end #add_new_box -->
+</div><!-- end .object_add -->
+
+<div class="objects_box">
+
+<h2>All Companies</h2>
+{% if all_companies %}
+<table class="objects_table" width="100%">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Company Type</th>
+		</tr>
+	</thead>
+	<tbody>
+    {% for company in all_companies %}
+        <tr>
+        	<td><a href="/company/{{company.id}}/">{{ company.name }}</a></td>
+        	<td>{{ company.company_type }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+
+    <p>No companies are available.</p>
+{% endif %}
+
+</div><!-- end .objects_box -->
+{% endblock %}
+
+
+
