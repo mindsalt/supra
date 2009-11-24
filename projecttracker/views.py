@@ -73,6 +73,10 @@ def project_detail(request, project_id):
 		'form': f,
 	})
 
+# project form related actions
+def project_companies(request):
+	
+
 
 ### COMPANY ###
 
