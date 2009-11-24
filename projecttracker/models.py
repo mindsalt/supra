@@ -2,10 +2,23 @@ from django.db import models
 from django.forms import ModelForm
 import datetime
 from django.http import HttpResponseRedirect, HttpResponse
+from django import forms
 
 # data models
-
-
+class ProjectForm(forms.Form):
+	client = forms.CharField(max_length=144)
+	title = forms.CharField(max_length=256)
+	category = forms.CharField(max_length=144)
+	projectId = forms.CharField(max_length=18)
+	est_time = forms.IntegerField()
+	total_time = forms.IntegerField()
+	status = forms.CharField(max_length=56)
+	team_members = forms.ChoiceField(required=False)
+	date_created = forms.DateTimeField()
+	
+	
+	
+	
 class Company(models.Model):
 	COMPANY_TYPE_CHOICES = (
 		(u'Owner Company', u'Owner Company'),
@@ -100,9 +113,9 @@ class Invoice(models.Model):
 		return self.invoice_num	
 		
 # form models
-class ProjectForm(ModelForm):
-	class Meta:
-		model = Project
+#class ProjectForm(ModelForm):
+#	class Meta:
+#		model = Project
 	
 class CompanyForm(ModelForm):
 	class Meta:

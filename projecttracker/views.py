@@ -3,7 +3,18 @@ from django.shortcuts import render_to_response, get_object_or_404
 from supra.projecttracker.models import *
 from django import forms
 
+### univ vars ##
+clients = Company.objects.filter(company_type='Client')
+
+
+
+### HOME ###
+
 def home_index(request):
+	projects = Project.objects.all()
+	companys = Company.objects.all()
+	persons = Person.objects.all()
+
 	project_form = ProjectForm()
 	company_form = CompanyForm()
 	person_form = PersonForm()
@@ -29,7 +40,8 @@ def get_absolute_url(self):
 def project_index(request):
 
 	# display all projects
-	all_projects = Project.objects.all().order_by('name')[:]
+	all_projects = Project.objects.all().order_by('title')[:]
+	all_clients = clients
 	
 	# add new project form processing
 	if request.method == 'POST': # If the form has been submitted...
@@ -45,6 +57,7 @@ def project_index(request):
 
 	return render_to_response('project/index.html', {
 		'all_projects': all_projects,
+		'all_clients': clients,
 		'form': form,
 	})
 	
