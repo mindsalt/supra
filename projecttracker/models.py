@@ -1,33 +1,38 @@
 from django.db import models
+from django import forms
 from django.forms import ModelForm
 import datetime
 from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 
-# data models
-class ProjectForm(forms.Form):
-	client = forms.CharField(max_length=144)
-	title = forms.CharField(max_length=256)
-	category = forms.CharField(max_length=144)
-	projectId = forms.CharField(max_length=18)
-	est_time = forms.IntegerField()
-	total_time = forms.IntegerField()
-	status = forms.CharField(max_length=56)
-	team_members = forms.ChoiceField(required=False)
-	date_created = forms.DateTimeField()
-	
-	
-	
-	
-class Company(models.Model):
-	COMPANY_TYPE_CHOICES = (
-		(u'Owner Company', u'Owner Company'),
-		(u'Client', u'Client'),				
-		(u'Vendor', u'Vendor'),
-		(u'Other', u'Other'),				
-	)
+###### HELPERS
+
+class Activity(models.Model):
 	name = models.CharField(max_length=144)
-	company_type = models.CharField(max_length=144, choices=COMPANY_TYPE_CHOICES)
+	def __unicode__(self):
+		return self.name
+
+class CompanyType(models.Model):
+	name = models.CharField(max_length=144)
+	def __unicode__(self):
+		return self.name	
+		
+class ProjectCategory(models.Model):
+	name = models.CharField(max_length=144)
+	def __unicode__(self):
+		return self.name	
+
+class ProjectStatus(models.Model):
+	name = models.CharField(max_length=56)
+	def __unicode__(self):
+		return self.name	
+
+
+###### MAIN DATA MODELS
+
+class Company(models.Model):
+	name = models.CharField(max_length=144)
+	company_type = models.ForeignKey(CompanyType)
 	company_url = models.CharField(max_length=144, blank=True, null=True)
 	def __unicode__(self):
 		return self.name
@@ -41,36 +46,17 @@ class Person(models.Model):
 		return self.name
 
 class Project(models.Model):
-	CATEGORY_CHOICES = (
-		(u'Identity', u'Identity'),
-		(u'Print', u'Print'),		
-		(u'Web', u'Web'),
-		(u'PR',u'PR'),
-		(u'Uncategorized',u'Uncategorized'),
-	)
-	STATUS_CHOICES = (
-		(u'Proposed', u'Proposed'),
-		(u'Active', u'Active'),
-		(u'Complete', u'Complete'),	
-		(u'On Hold', u'On Hold'),			
-	)
 	client = models.ForeignKey(Company)
 	title = models.CharField(max_length=256)
-	category = models.CharField(max_length=144, choices=CATEGORY_CHOICES)
+	category = models.ForeignKey(ProjectCategory)
 	projectId = models.CharField(max_length=18, unique=True)
 	est_time = models.IntegerField(blank=True, null=True)
 	total_time = models.IntegerField(blank=True, null=True)
-	status = models.CharField(max_length=56, choices=STATUS_CHOICES)
-	team_members = models.ManyToManyField('Person')
+	status = models.ForeignKey(ProjectStatus)
+	notes = models.CharField(max_length=500, blank=True, null=True)
 	date_created = models.DateTimeField()
 	def __unicode__(self):
 		return self.title
-
-
-class Activity(models.Model):
-	name = models.CharField(max_length=144)
-	def __unicode__(self):
-		return self.name
 		
 class Time(models.Model):
 	person = models.ForeignKey(Person)
@@ -111,11 +97,23 @@ class Invoice(models.Model):
 	paid = models.BooleanField();
 	def __unicode__(self):
 		return self.invoice_num	
+
+
 		
-# form models
-#class ProjectForm(ModelForm):
-#	class Meta:
-#		model = Project
+###### FORM MODELS
+	
+class ProjectForm(forms.Form):
+	client = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
+	title = forms.CharField(max_length=256)
+	category = forms.ModelChoiceField(queryset=ProjectCategory.objects.all(), empty_label=None)
+	projectId = forms.CharField(max_length=18)
+	est_time = forms.IntegerField()
+	total_time = forms.IntegerField()
+	status = forms.ModelChoiceField(queryset=ProjectStatus.objects.all(), empty_label=None)
+	notes = forms.CharField(widget=forms.Textarea)
+	date_created = forms.DateTimeField()
+		
+		
 	
 class CompanyForm(ModelForm):
 	class Meta:

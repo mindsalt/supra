@@ -21,3 +21,5 @@ div.object_add, div.objects_box {display: block; margin: 10px 0; padding: 10px; 
 
 table.objects_table {text-align: left;}
 table.objects_table th {text-align: left;}
+
+.fieldWrapper {display: block; width:100%; margin:10px 0;}

@@ -18,6 +18,8 @@ urlpatterns = patterns('',
     (r'^$', 'supra.projecttracker.views.home_index'),	
 
 	# project urls
+    (r'^get_clients/$', 'supra.projecttracker.views.get_clients'),
+	
     (r'^project/$', 'supra.projecttracker.views.project_index'),
     (r'^project/(?P<project_id>\d+)/$', 'supra.projecttracker.views.project_detail'),
 

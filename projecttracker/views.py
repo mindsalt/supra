@@ -2,9 +2,15 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from supra.projecttracker.models import *
 from django import forms
+from django.core import serializers
+
 
 ### univ vars ##
-clients = Company.objects.filter(company_type='Client')
+clients = serializers.serialize("json", Company.objects.filter(company_type='Client'))
+
+# return clients in JSON
+def get_clients(request):
+	return HttpResponse(clients,mimetype='application/json')
 
 
 
@@ -30,9 +36,6 @@ def home_index(request):
 		'expense_form':expense_form,
 		'invoice_form':invoice_form,
 	})
-
-def get_absolute_url(self):
-    return u"/project/%s/" % self.id
 
 
 ### PROJECT ###
@@ -74,8 +77,8 @@ def project_detail(request, project_id):
 	})
 
 # project form related actions
-def project_companies(request):
-	
+# def project_companies(request):
+		
 
 
 ### COMPANY ###
