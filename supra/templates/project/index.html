@@ -3,7 +3,10 @@
 {% block title %}Projects{% endblock %}
 
 {% block head_inc %}
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<link type="text/css" href="http://127.0.0.1:8000/site_media/css/cupertino/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+
+<script type="text/javascript" src="http://127.0.0.1:8000/site_media/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="http://127.0.0.1:8000/site_media/js/jquery-ui-1.7.2.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -24,17 +27,16 @@ $(document).ready(function() {
 	var loadUrl = "http://127.0.0.1:8000/project/edit/";
 
 	$(".edit").click(function(){  
-		var this_project = $(this).next().text();
-		var to_replace = $(this).parent().css("class", "row_wrapper");
+		var this_project = $(this).attr('id');
+		var to_replace = $(this).closest('div.row_wrapper');
 		to_replace.html(ajax_load).load(loadUrl, {projectId: this_project});  
 	});
 	
-	/* accordion
-	$('#accordion .header').click(function() {
-		$(this).next().toggle('fast');
-		return false;
-	}).next().hide();
-	*/
+	// init accordion
+	$(function(){
+		$("#accordion").accordion({ header: "div.header" });				
+	});
+
 });
 
 
@@ -45,44 +47,56 @@ $(document).ready(function() {
 {% block content %}
 
 <h1>Projects Page</h1>
+
 <div class="object_add">
-<h2><a id="add_new_btn" href="#">Add a new project</a></h2>
-
-<div id="add_new_box">
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="/project/view/" method="POST">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><label for="id_client">Client:</label></td>
-    <td colspan="3">{{ form.client }}</td>
-  </tr>
-  <tr>
-    <td><label for="id_title">Project Title:</label></td>
-    <td>{{ form.title }}</td>
-    <td><label for="id_project_category">Category:</label></td>
-    <td>{{ form.category }}</td>
-  </tr>
-  <tr>
-    <td> <label for="id_est_time">Estimated Time</label></td>
-    <td>{{ form.est_time }}</td>
-    <td><label for="id_status">Status</label></td>
-    <td>{{ form.status }}</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="3">{{ form.notes }}</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td><input type="submit" value="Submit" /></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-</form>
-
-</div><!-- end #add_new_box -->
+	<h2><a id="add_new_btn" href="#">Add a new project</a></h2>
+	<div class="sorting">
+		<form method="POST" action="/project/view/"  name="sort_form" id="sort_form">
+			<select name="sort_by">
+				<option value="client">Client</option>
+				<option value="title">Title</option>
+				<option value="category">Category</option>
+			</select>
+			<input type="submit" value="Sort results" />
+		</form>
+	</div>
+	<div id="add_new_box">
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+		
+		<form action="/project/create/" method="POST">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td><label for="id_client">Client:</label></td>
+		    <td colspan="3">{{ form.client }}</td>
+		  </tr>
+		  <tr>
+		    <td><label for="id_title">Project Title:</label></td>
+		    <td>{{ form.title }}</td>
+		    <td><label for="id_project_category">Category:</label></td>
+		    <td>{{ form.category }}</td>
+		  </tr>
+		  <tr>
+		    <td> <label for="id_est_time">Estimated Time</label></td>
+		    <td>{{ form.est_time }}</td>
+		    <td><label for="id_status">Status</label></td>
+		    <td>{{ form.status }}</td>
+			<td>Project ID: {{ form.projectId }}</td>	        	        	
+		
+		  </tr>
+		  <tr>
+		    <td>Notes</td>
+		    <td colspan="3">{{ form.notes }}</td>
+		  </tr>
+		  <tr>
+		    <td>&nbsp;</td>
+		    <td><input type="submit" value="Submit" /></td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		  </tr>
+		</table>
+		</form>
+	
+	</div><!-- end #add_new_box -->
 </div><!-- end .object_add -->
 
 <div class="objects_box">
@@ -92,8 +106,6 @@ $(document).ready(function() {
 <table class="objects_table" width="100%" border="0" cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th width="8%">Edit</th>
-			<th width="10%">Project ID</th>
 			<th width="25%">Title</th>
 			<th width="20%">Client</th>
 			<th width="10%">Est. Time</th>
@@ -108,12 +120,10 @@ $(document).ready(function() {
     {% for project in all_projects %}
     
     <!-- begin project -->
-    <div class="row_wrapper">
+    <div class="row_wrapper" id="row_{{projectId}}">
         <div class="header">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-left:20px">
 	        <tr>
-	        	<td width="8%" class="edit">Edit</td>
-	        	<td width="10%" class="projectId">{{ project.projectId }}</td>
 	        	<td width="25%">{{ project.title }}</td> 
 	        	<td width="20%">{{ project.client }}</td>
 	        	<td width="10%">{{ project.est_time }}</td>
@@ -124,10 +134,13 @@ $(document).ready(function() {
         </div><!-- end .header -->
         
         <div class="panel">
-        <table width="100%">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	        <tr>
-	        	<td width="83%">{{ project.notes }}</td>
-	        	<td width="17%">{{ project.category }}</td>
+	        	<td width="53%">Notes: {{ project.notes }}</td>
+	        	<td width="14%">Category: {{ project.category }}</td>
+	        	<td width="14%">Project ID: {{ project.projectId }}</td>	        	        	
+	        	<td width="19%" class="edit" id="{{project.projectId}}"><a href="#">Edit</a></td>
+
 			</tr>
 		</table>
         </div><!-- end .panel -->

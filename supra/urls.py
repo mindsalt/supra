@@ -24,10 +24,9 @@ urlpatterns = patterns('',
 
 	# project		
     (r'^project/view/$','supra.project.views.view_all'),
-	(r'^project/view/(?P<project_id>\d+)/$','supra.project.views.view_single'),  
     (r'^project/edit/$','supra.project.events.start_edit'),
     (r'^project/edit/save/$','supra.project.events.save_edit'),
-    (r'^project/create/$','supra.project.events.create'),
+    (r'^project/create/$','supra.project.events.create_project'),
 	
 
 )

@@ -34,6 +34,27 @@ def save_edit(request):
 		form = ProjectForm(request.POST) # if errors, show bound form w/ error msg
 		print form.errors				
 
-def create(request):
-	return HttpResponse("Here's the created section.")
+
+def create_project(request):
+
+	# process new project form 
+	form = ProjectForm(request.POST)
+	project = form.save(commit=False)
+	
+	# create ID
+	client_code = str(project.client).upper()[:3]
+	year = str(datetime.datetime.now())[2:4]
+	client_total = len(Project.objects.filter(client=project.client))
+	proj_num = client_total + 1
+	
+	# assign ID and other req'd fields
+	project.projectId = client_code + year + str(proj_num)
+	project.date_created = datetime.datetime.now()
+	project.total_time = 0
+	
+	project.save()
+	
+	return HttpResponseRedirect("/project/view/")
+		
+
 

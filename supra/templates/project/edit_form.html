@@ -1,23 +1,26 @@
-<div class="row_wrapper">
-	<form action="../edit/save/" method="POST">
+<div class="row_wrapper" id="row_{{projectId}}">
+	<form action="http://127.0.0.1:8000/project/edit/save/" method="POST">
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <div class="header">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-left:20px">
 	        <tr>
-	        	<td width="8%"></td>
-	        	<td width="20%">{{ form.projectId}}</td>
 	        	<td width="25%">{{ form.title }}</td> 
 	        	<td width="20%">{{ form.client }}</td>
 	        	<td width="10%">{{ form.est_time }}</td>
+	        	<td width="10%">{{ form.total_time }}</td>
 	        	<td width="17%">{{ form.status }}</td>
 	        </tr>        
         </table>        
-        <table width="100%">
+        </div><!-- end .header -->
+        
+        <div class="panel">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
 	        <tr>
-	        	<td width="83%">{{ form.notes }}</td>
-	        	<td width="17%">{{ form.category }}</td>
+	        	<td width="53%">{{ form.notes }}</td>
+	        	<td width="14%">Category: {{ form.category }}</td>
+	        	<td width="14%">Project ID: {{ form.projectId }}</td>	        	        	
+	        	<td width="19%" class="edit"><input type="submit" value="Save changes" /></td>
 			</tr>
 		</table>
-	    <input type="submit" value="Submit" />
-	</form>
-</div><!-- end .row_wrapper -->  
-
+        </div><!-- end .panel -->
+    </div><!-- end .row_wrapper -->  
