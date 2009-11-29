@@ -1,10 +1,23 @@
-<tr>
-<td colspan="9">
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<div class="row_wrapper">
+	<form action="../edit/save/" method="POST">
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	        <tr>
+	        	<td width="8%"></td>
+	        	<td width="20%">{{ form.projectId}}</td>
+	        	<td width="25%">{{ form.title }}</td> 
+	        	<td width="20%">{{ form.client }}</td>
+	        	<td width="10%">{{ form.est_time }}</td>
+	        	<td width="17%">{{ form.status }}</td>
+	        </tr>        
+        </table>        
+        <table width="100%">
+	        <tr>
+	        	<td width="83%">{{ form.notes }}</td>
+	        	<td width="17%">{{ form.category }}</td>
+			</tr>
+		</table>
+	    <input type="submit" value="Submit" />
+	</form>
+</div><!-- end .row_wrapper -->  
 
-<form action="../edit/save/" method="POST">
-{{ form.as_p}}
-    <input type="submit" value="Submit" />
-</form>
-</td>
-</tr>

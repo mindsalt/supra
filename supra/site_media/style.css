@@ -23,3 +23,8 @@ table.objects_table {text-align: left;}
 table.objects_table th {text-align: left;}
 
 .fieldWrapper {display: block; width:100%; margin:10px 0;}
+
+#accordion {}
+.row_wrapper {margin: 10px 0;}
+.row_wrapper .header {background: #ccc; padding: 5px;}
+.row_wrapper .panel {background: #eee; padding: 5px; }

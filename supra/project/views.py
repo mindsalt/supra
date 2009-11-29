@@ -13,8 +13,7 @@ clients = Company.objects.all()
 def view_all(request):		
 
 	all_projects = Project.objects.all()
-
-	form = ProjectForm(request.POST)
+	form = ProjectForm()
 	
 	# if form has been submitted, process it
 	if request.method == 'POST':
