@@ -30,7 +30,7 @@ class Company(models.Model):
 		return self.name
 
 class Project(models.Model):
-	projectId = models.CharField(max_length=18, unique=True, editable=False)
+	projectId = models.CharField(max_length=18, unique=True)
 	date_created = models.DateTimeField(editable=False)	
 	client = models.ForeignKey(Company)
 	title = models.CharField(max_length=256)

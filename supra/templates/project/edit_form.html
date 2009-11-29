@@ -1,0 +1,10 @@
+<tr>
+<td colspan="9">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="../edit/save/" method="POST">
+{{ form.as_p}}
+    <input type="submit" value="Submit" />
+</form>
+</td>
+</tr>

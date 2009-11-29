@@ -6,8 +6,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	//if no errors in form work slickbox magic
+	//if no errors in form work slickbox magic on page load
 	if ($('ul.errorlist').length == 0) {
 	 	$('#add_new_box').hide();
 		$('a#add_new_btn').click(function() {
@@ -15,16 +14,22 @@ $(document).ready(function() {
 			return false;
 		});
 	}
-/*
-$.getJSON("/get_clients/", function(data) {
-	// loop through json object and get client names
-	for (var i = 0; i < data.length; i++) {
-		alert(data[i].fields.name);
-	};
-});
-*/		
 
+	// ajax functions
+	$.ajaxSetup ({
+		cache: false
+	});
+	var ajax_load = "<img src='http://127.0.0.1:8000/site_media/img/ajax-loader.gif' alt='loading...' />";
+	var loadUrl = "http://127.0.0.1:8000/project/edit/";
+
+	$(".edit").click(function(){  
+		var this_project = $(this).next().text();
+		var to_replace = $(this).parent().css("class", "row_wrapper");
+		to_replace.html(ajax_load).load(loadUrl, {projectId: this_project});  
+	});
 });
+
+
 </script>
 
 {% endblock %}
@@ -80,26 +85,32 @@ $.getJSON("/get_clients/", function(data) {
 <table class="objects_table" width="100%">
 	<thead>
 		<tr>
-			<th>ProjectID</th>
+			<th>Edit</th>
+			<th>Project ID</th>
 			<th>Title</th>
 			<th>Client</th>
 			<th>Category</th>
 			<th>Est. Time</th>
 			<th>Total Time</th>
 			<th>Status</th>
+			<th>Notes</th>
 		</tr>
 	</thead>
 	<tbody>
     {% for project in all_projects %}
+    <div class="row_wrapper">
         <tr>
-        	<td><a href="/project/{{project.id}}/">{{ project.projectId }}</a></td>
+        	<td class="edit">Edit</td>
+        	<td class="projectId">{{ project.projectId }}</td>
         	<td>{{ project.title }}</td> 
         	<td>{{ project.client }}</td>
         	<td>{{ project.category }}</td>
         	<td>{{ project.est_time }}</td>
         	<td>{{ project.total_time }}</td>
         	<td>{{ project.status }}</td>
+        	<td>{{ project.notes }}</td>
         </tr>
+    </div>    
     {% endfor %}
     </tbody>
 </table>

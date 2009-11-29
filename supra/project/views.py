@@ -62,6 +62,20 @@ def view_single(request, project_id):
 		'form': f,
 	})
 
+	
+def edit(request, project_id):
+	# this is how we'll edit it
+	p = Project.objects.get(pk=1)
+	f = ProjectForm(instance=p)
+	if f.is_valid():
+		f.save()
+		return HttpResponse('sucess!')
+
+	return render_to_response('project/single.html', {
+		'form': f,
+	})
+
+
 # project form related actions
 # def project_companies(request):
 		

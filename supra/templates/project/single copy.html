@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Projects :: {{project.title}}{% endblock %}
+
+{% block content %}
+<h2>Edit Project</h2>
+<div id="add_new_box">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<form action="/project/edit/save/" method="POST">
+	{{ form.as_p }}
+
+	<input type="submit" value="Submit" />
+	</form>
+</div><!-- end #add_new_box -->
+
+
+{% endblock %}
+
+
+
