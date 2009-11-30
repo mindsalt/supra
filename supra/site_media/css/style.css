@@ -17,9 +17,7 @@ text-decoration:none;}
 
 #content {clear:both; padding:20px; }
 
-div.object_add, div.objects_box {display: block; margin: 10px 0; padding: 10px; border: 1px solid #ccc;}
-
-table.objects_table {text-align: left;}
+table.objects_table {text-align: left; margin-left: 0 20px; color:#666;}
 table.objects_table th {text-align: left;}
 
 .fieldWrapper {display: block; width:100%; margin:10px 0;}
@@ -28,3 +26,20 @@ table.objects_table th {text-align: left;}
 .row_wrapper {margin: 10px 0;}
 .row_wrapper .header {background: #ccc; padding: 5px;}
 .row_wrapper .panel {background: #eee; padding: 5px; }
+
+
+#object_add {display: block; margin: 10px 0; padding: 5px; height:auto; }
+.objects_box {display: block; margin: 10px 0; padding: 5px; border: 1px solid #ccc;}
+
+#add_new_box {display:block; width:100%; position:relative; float:left; margin:22px 0; background:#eee; border:none; }
+#add_new_box .item {display:block; clear:both; float:left; width:100%; margin:5px; }
+#add_new_box .item .subitem {display:block; float:left; width:30%; margin-right:3%; }
+#add_new_box #item_projectId {position:relative; right:0; top:0;}
+
+#newproject_form {}
+#newproject_form label {display:block; width:70px; text-align: left; margin-top:5px; float:left;}
+#newproject_form input, #newproject_form select {display:block; float:left;}
+input#id_title {width:250px;}
+input#id_est_time {width:50px;}
+input#id_notes {width:350px; height:20px;}
+input#id_projectId {width:60px;}

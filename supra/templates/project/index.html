@@ -7,6 +7,8 @@
 
 <script type="text/javascript" src="{{MEDIA_URL}}js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="{{MEDIA_URL}}js/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -36,6 +38,9 @@ $(document).ready(function() {
 	$(function(){
 		$("#accordion").accordion({ header: "div.header" });				
 	});
+	
+	// form validation
+	$("#newproject_form").validate();
 
 });
 
@@ -48,8 +53,9 @@ $(document).ready(function() {
 
 <h1>Projects Page</h1>
 
-<div class="object_add">
+<div id="object_add">
 	<h2><a id="add_new_btn" href="#">Add a new project</a></h2>
+<!--  no sorting yet
 	<div class="sorting">
 		<form method="POST" action="/project/view/"  name="sort_form" id="sort_form">
 			<select name="sort_by">
@@ -60,53 +66,68 @@ $(document).ready(function() {
 			<input type="submit" value="Sort results" />
 		</form>
 	</div>
-	<div id="add_new_box">
-		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+-->
+	<div id="add_new_box">	
 		
-		<form action="/project/create/" method="POST">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-		  <tr>
-		    <td><label for="id_client">Client:</label></td>
-		    <td colspan="3">{{ form.client }}</td>
-		  </tr>
-		  <tr>
-		    <td><label for="id_title">Project Title:</label></td>
-		    <td>{{ form.title }}</td>
-		    <td><label for="id_project_category">Category:</label></td>
-		    <td>{{ form.category }}</td>
-		  </tr>
-		  <tr>
-		    <td> <label for="id_est_time">Estimated Time</label></td>
-		    <td>{{ form.est_time }}</td>
-		    <td><label for="id_status">Status</label></td>
-		    <td>{{ form.status }}</td>
-			<td>Project ID: {{ form.projectId }}</td>	        	        	
-		
-		  </tr>
-		  <tr>
-		    <td>Notes</td>
-		    <td colspan="3">{{ form.notes }}</td>
-		  </tr>
-		  <tr>
-		    <td>&nbsp;</td>
-		    <td><input type="submit" value="Submit" /></td>
-		    <td>&nbsp;</td>
-		    <td>&nbsp;</td>
-		  </tr>
-		</table>
-		</form>
+		<form id="newproject_form" action="/project/create/" method="POST">
+
+			<div class="item">
+				<label for="id_client">Client:</label>
+				{{ form.client }}
+				{{form.client.errors}}
+			</div>
+<!-- created serverside
+			<div class="item" id="item_projectId">			
+				<label for="id_projectId">Project ID:</label>
+				{{ form.projectId }}
+				{{form.projectId.errors}}
+			</div>				
+-->
+			<div class="item">
+				<label for="id_title">Project Title:</label>
+				{{ form.title }}
+				{{form.title.errors}}
+			</div>	
+
+			<div class="item">
+				<div class="subitem">
+					<label for="id_category">Category:</label>
+					{{ form.category }}
+					{{form.category.errors}}
+				</div>	
+				<div class="subitem">
+					<label for="id_status">Status:</label>
+					{{ form.status }}
+					{{form.status.errors}}
+				</div>	
+				<div class="subitem">
+					<label for="id_est_time">Est. Time:</label>
+					{{ form.est_time }}
+					{{form.est_time.errors}}
+				</div>
+			</div>				
 	
+			<div class="item">
+				<label for="id_notes">Notes:</label>
+				{{ form.notes }}
+				{{form.notes.errors}}
+			</div>	
+
+			<div class="item">
+				<input type="submit" value="Submit" />
+			</div>	
+
+		</form>
 	</div><!-- end #add_new_box -->
-</div><!-- end .object_add -->
+	
+</div><!-- end #object_add -->
 
 <div class="objects_box">
-
-<h2>All Projects</h2>
 
 <table class="objects_table" width="100%" border="0" cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th width="25%">Title</th>
+			<th width="29%">Project Title</th>
 			<th width="20%">Client</th>
 			<th width="10%">Est. Time</th>
 			<th width="10%">Total Time</th>
