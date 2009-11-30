@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django import forms
 from project.models import *
@@ -11,8 +12,8 @@ def start_edit(request):
 	f = ProjectForm(instance=project)	
 	
 	return render_to_response('project/edit_form.html', {
-		'form': f,
-	})
+		'form': f},		
+		context_instance = RequestContext(request))
 
 
 def save_edit(request):
@@ -28,8 +29,8 @@ def save_edit(request):
 		
 		return render_to_response('project/index.html', {
 			'form': blank_form,
-			'all_projects':all_projects
-		})
+			'all_projects':all_projects},		
+			context_instance = RequestContext(request))
 	else:
 		form = ProjectForm(request.POST) # if errors, show bound form w/ error msg
 		print form.errors				

@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from django import forms
 from project.models import *
@@ -22,22 +23,23 @@ def view_all(request):
 		if sort_by == 'title':
 			return render_to_response('project/index.html', {
 				'form': form,
-				'all_projects':all_projects.order_by('title')
-			})
+				'all_projects':all_projects.order_by('title')},		
+				context_instance = RequestContext(request))
 		if sort_by == 'client':
 			return render_to_response('project/index.html', {
 				'form': form,
-				'all_projects':all_projects.order_by('client')
-			})	
+				'all_projects':all_projects.order_by('client')},		
+				context_instance = RequestContext(request))
 		if sort_by == 'category':
 			return render_to_response('project/index.html', {
 				'form': form,
-				'all_projects':all_projects.order_by('category')
-			})
+				'all_projects':all_projects.order_by('category')},		
+				context_instance = RequestContext(request))
 						
 	# otherwise render the normal page, sort by project id	
 	return render_to_response('project/index.html', {
 		'form': form,
-		'all_projects':all_projects.order_by('projectId')
-	})
+		'all_projects':all_projects.order_by('projectId')},		
+		context_instance = RequestContext(request))
+
 	

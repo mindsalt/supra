@@ -36,7 +36,6 @@ USE_I18N = True
 
 # site paths
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-SITE_URL = 'http://127.0.0.1:8000/'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"

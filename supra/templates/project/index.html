@@ -3,10 +3,10 @@
 {% block title %}Projects{% endblock %}
 
 {% block head_inc %}
-<link type="text/css" href="http://127.0.0.1:8000/site_media/css/cupertino/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+<link type="text/css" href="{{MEDIA_URL}}css/cupertino/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
 
-<script type="text/javascript" src="http://127.0.0.1:8000/site_media/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="http://127.0.0.1:8000/site_media/js/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}js/jquery-ui-1.7.2.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	
@@ -23,7 +23,7 @@ $(document).ready(function() {
 	$.ajaxSetup ({
 		cache: false
 	});
-	var ajax_load = "<img src='http://127.0.0.1:8000/site_media/img/ajax-loader.gif' alt='loading...' />";
+	var ajax_load = "<img src='{{MEDIA_URL}}img/ajax-loader.gif' alt='loading...' />";
 	var loadUrl = "http://127.0.0.1:8000/project/edit/";
 
 	$(".edit").click(function(){  
